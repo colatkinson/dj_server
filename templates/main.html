@@ -1,0 +1,18 @@
+<!doctype html>
+<title>Hello from Flask</title>
+<h1>Hello World!</h1>
+
+{% if player.playing %}
+    Currently playing: {{ player.track.title }} by {{ player.track.user["username"] }}
+{% endif %}
+
+<form action="/play" method="POST">
+<input type="url" name="url" />
+<input type="submit" text="Add to playlist" />
+</form>
+
+<ul>
+{% for song in player.playlist %}
+    <li><a href="{{ song }}">{{ song }}</a></li>
+{% endfor %}
+<ul>

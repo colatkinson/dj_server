@@ -7,7 +7,12 @@ import flask
 from flask import Flask, render_template, request
 app = Flask(__name__)
 
-client = soundcloud.Client(client_id='***REMOVED***')
+f = open("secret", "r")
+client = f.read().strip()
+f.close()
+print(client)
+
+client = soundcloud.Client(client_id=client)
 
 class Player:
     playlist = []
@@ -29,8 +34,12 @@ class Player:
 
     def add_to_playlist(self, url):
         self.playlist.append(url)
-        if len(self.playlist) == 1:
+        # if len(self.playlist) == 1:
+        if not self.playing:
             self.set_track(client.get("/resolve", url=self.playlist[self.ind]))
+        # self.play()
+        print("ayy", self.ind, self.playlist)
+        print(self.player.get_state(Gst.CLOCK_TIME_NONE))
 
     def play(self):
         if not self.playing:
@@ -62,6 +71,7 @@ class Player:
         self.stop()
 
         self.ind += 1
+        print(self.ind, self.playlist)
         if self.ind < len(self.playlist):
             self.set_track(client.get("/resolve", url=self.playlist[self.ind]))
             self.play()
@@ -110,11 +120,11 @@ def play_track(client, track):
     player.set_state(Gst.State.PLAYING)
 
 # def main():
-    # client = soundcloud.Client(client_id='***REMOVED***')
+    # client = soundcloud.Client(client_id='edc707219bcc43422ee53bd653a0b2f7')
     # track = get_track(client, 293)
     # track = client.get("/resolve", url="https://soundcloud.com/xxx/maya-payne-if-only")
     # play_track(client, track)
 
 if __name__ == '__main__':
     # main()
-    app.run(debug=True)
+    app.run("0.0.0.0", debug=True)

@@ -4,34 +4,19 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var sc = require('./soundcloud');
+var player = require('./player_wrap');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var add = require('./routes/add');
 
-/*var Player = require('player');
-var player = require('./player_wrap');
-var soundcloud = require('./soundcloud');*/
-
-//console.log(player.player);
-
-/*soundcloud.getStreamUrl('https://soundcloud.com/bigwax/wax-two-wheels', function(url) {
-    console.log(url);
-    // console.log(player.player);
-    player.player.add(url);
-    //console.log(player.player);
-    player.player.play();
-//    player.player.next();
-    // new Player(url).play();
-    //var list = [];
-    //list.push(url);
-    //console.log('list', list);
-    //new Player(url).enable('stream').on('downloading', function(song) { console.log('down'); }).on('playing', function(song) { console.log('play'); }).play();
-    //console.log(playerplayer.list);
-    //playerplayer.play();
-});*/
-
 var app = express();
+//var server = require('http').Server(app);
+var io = require('socket.io')();
+app.io = io;
+
+// server.listen(8000);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -77,6 +62,25 @@ app.use(function(err, req, res, next) {
   res.render('error', {
     message: err.message,
     error: {}
+  });
+});
+
+io.on('connection', function (socket) {
+  // console.log(socket);
+  /*socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });*/
+  io.emit('song added', {ind: player._ind, playlist: player.playlist});
+  player.onSongChange = function() {
+    io.emit('song added', {ind: player._ind, playlist: player.playlist});
+  };
+  socket.on('add song', function (data) {
+    sc.resolveUrl(data, function(json) {
+      player.add(new player.Track(json.stream_url, json.title, json.user.username));
+      player.play();
+      io.emit('song added', {ind: player._ind, playlist: player.playlist});
+    });
   });
 });
 

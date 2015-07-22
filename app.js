@@ -9,6 +9,28 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var add = require('./routes/add');
 
+/*var Player = require('player');
+var player = require('./player_wrap');
+var soundcloud = require('./soundcloud');*/
+
+//console.log(player.player);
+
+/*soundcloud.getStreamUrl('https://soundcloud.com/bigwax/wax-two-wheels', function(url) {
+    console.log(url);
+    // console.log(player.player);
+    player.player.add(url);
+    //console.log(player.player);
+    player.player.play();
+//    player.player.next();
+    // new Player(url).play();
+    //var list = [];
+    //list.push(url);
+    //console.log('list', list);
+    //new Player(url).enable('stream').on('downloading', function(song) { console.log('down'); }).on('playing', function(song) { console.log('play'); }).play();
+    //console.log(playerplayer.list);
+    //playerplayer.play();
+});*/
+
 var app = express();
 
 // view engine setup

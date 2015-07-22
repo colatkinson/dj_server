@@ -16,7 +16,6 @@ function getStreamUrl(url, callback) {
             var json = JSON.parse(body);
             // callback(json.stream_url + '?client_id=' + clientId);
             request.head(json.stream_url + '?client_id=' + clientId).on('response', function(response) {
-                console.log(response);
                 callback(response.request.uri.href);
             });
         });

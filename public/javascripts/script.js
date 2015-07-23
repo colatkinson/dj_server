@@ -13,11 +13,22 @@ window.onload = function() {
             //img.src = data.playlist[i].artwork;
             node.style.backgroundImage = 'linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(' + data.playlist[i].artwork + ')';
 
+            node.dataset.ind = i;
+
             node.appendChild(textnode);
             //node.appendChild(img);
             list.appendChild(node);
         }
     });
+
+    function onAlbumsClick(e) {
+        if (e.target !== e.currentTarget) {
+            // console.log(e.target);
+            socket.emit('select song', e.target.dataset.ind);
+        }
+        e.stopPropagation();
+    }
+    document.querySelector("#playlist").addEventListener("click", onAlbumsClick, false);
 
     document.getElementById('urlForm').onsubmit = function() {
         socket.emit('add song', document.getElementById('urlInput').value);

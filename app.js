@@ -99,6 +99,11 @@ io.on('connection', function (socket) {
       io.emit('song added', {ind: player._ind, playlist: player.playlist});
     });
   });
+
+  socket.on('select song', function(data) {
+    console.log(data);
+    player.play_track(parseInt(data));
+  });
 });
 
 

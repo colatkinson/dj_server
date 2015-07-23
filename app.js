@@ -99,12 +99,14 @@ io.on('connection', function (socket) {
       }
       player.play();
       io.emit('song added', {ind: player._ind, playlist: player.playlist});
+      io.emit('playing', player.playing);
     });
   });
 
   socket.on('select song', function(data) {
     console.log(data);
     player.play_track(parseInt(data));
+    io.emit('playing', player.playing);
   });
 
   socket.on('toggle song', function(data) {
@@ -113,6 +115,7 @@ io.on('connection', function (socket) {
     } else {
       player.stop();
     }
+    io.emit('playing', player.playing);
   });
 
   socket.on('next song', function(data) {

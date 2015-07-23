@@ -100,8 +100,11 @@ header {
     background: none;
     border: none !important;
     -webkit-appearance: none !important;
-    font-size: 72px;
+    font-size: 64px;
     outline: none;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
 }
 
 #urlForm {

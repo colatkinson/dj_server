@@ -5,10 +5,10 @@ block content
     //h1= title
     //p Welcome to #{title}
     div#controls
-      div#curSong 
-      button#prev &#171;
-      button#play &#9658;
-      button#next &#187;
+      div#curSong &nbsp;
+      button#prev.fa.fa-backward
+      button#play.fa.fa-play
+      button#next.fa.fa-forward
       form(method="POST", action="/add")#urlForm
         input(type="url", name="url", required)#urlInput
         input(type="submit")#urlSubmit

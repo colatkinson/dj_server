@@ -31,6 +31,14 @@ window.onload = function() {
         }
     });
 
+    socket.on('playing', function(data) {
+        if(data) {
+            document.querySelector('#play').className = 'fa fa-pause';
+        } else {
+            document.querySelector('#play').className = 'fa fa-play';
+        }
+    });
+
     function onAlbumsClick(e) {
         if (e.target !== e.currentTarget) {
             // console.log(e.target);

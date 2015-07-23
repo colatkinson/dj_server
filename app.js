@@ -66,9 +66,9 @@ app.use(function(err, req, res, next) {
 });
 
 function addTrack(json) {
-  var art = 'https://placehold.it/300x300';
+  var art = 'https://placehold.it/500x500';
   if(json.artwork_url) {
-    art = json.artwork_url.replace(/large/g, 'crop');
+    art = json.artwork_url.replace(/large/g, 't500x500');
   }
   player.add(new player.Track(json.stream_url, json.title, json.user.username, art));
 }

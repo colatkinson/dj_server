@@ -1,11 +1,16 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  header
+    //h1= title
+    //p Welcome to #{title}
+    div#controls
+      div#curSong
+      button#prev &#171;
+      button#play &#9658;
+      button#next &#187;
+      form(method="POST", action="/add")#urlForm
+        input(type="url", name="url", required)#urlInput
+        input(type="submit")#urlSubmit
 
-  form(method="POST", action="/add")#urlForm
-    input(type="url", name="url", required)#urlInput
-    input(type="submit")#urlSubmit
-
-  ul#playlist
+  div#playlist

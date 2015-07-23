@@ -7,13 +7,23 @@ window.onload = function() {
         list.innerHTML = '';
         for(var i = 0; i < data.playlist.length; i++) {
             var node = document.createElement('li');
-            var textnode = document.createTextNode(((i == data.ind) ? '* ' : '') + data.playlist[i].title + ' by ' + data.playlist[i].artist);
+            var textnode = document.createTextNode(data.playlist[i].title + ' by ' + data.playlist[i].artist);
             
             //var img = document.createElement('img');
             //img.src = data.playlist[i].artwork;
-            node.style.backgroundImage = 'linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(' + data.playlist[i].artwork + ')';
+            var gradDef = '0, 0, 0, 0.5';
+            var grad = gradDef;
+            if(i == data.ind) {
+                grad = '255, 85, 0, 0.5';
+            }
+            node.style.backgroundImage = 'linear-gradient(to bottom, rgba(' + grad + '), rgba(' + grad + ')), url(' + data.playlist[i].artwork + ')';
 
             node.dataset.ind = i;
+
+            if(i == data.ind) {
+                document.querySelector('#curSong').innerText = data.playlist[i].title + ' by ' + data.playlist[i].artist;
+                document.querySelector('#controls').style.backgroundImage = 'linear-gradient(to bottom, rgba(' + gradDef + '), rgba(' + gradDef + ')), url(' + data.playlist[i].artwork + ')';
+            }
 
             node.appendChild(textnode);
             //node.appendChild(img);
@@ -37,3 +47,13 @@ window.onload = function() {
         return false;
     }
 }
+
+window.onscroll = function() {
+    console.log('scroll');
+    if(document.body.scrollTop) {
+        console.log('wham')
+        document.querySelector('header').className = 'scrolled';
+    } else {
+        document.querySelector('header').className = '';
+    }
+};

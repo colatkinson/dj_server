@@ -45,7 +45,17 @@ window.onload = function() {
         document.getElementById('urlInput').value = '';
 
         return false;
-    }
+    };
+
+    document.querySelector('#play').onclick = function() {
+        socket.emit('toggle song');
+    };
+    document.querySelector('#next').onclick = function() {
+        socket.emit('next song');
+    };
+    document.querySelector('#prev').onclick = function() {
+        socket.emit('prev song');
+    };
 }
 
 window.onscroll = function() {

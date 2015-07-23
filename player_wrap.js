@@ -28,13 +28,17 @@ module.exports = {
             // Ugly, yet functional
             var parent = this;
             var decoder = new lame.Decoder();
+            decoder._ind = this._ind;
             decoder.on('format', function(format) {
-                parent.stream = decoder.pipe(new Speaker);
+                console.log(parent._ind, this._ind);
+                if(this._ind == parent._ind) {
+                    parent.stream = decoder.pipe(new Speaker);
+                }
             });
             this.stream.pipe(decoder);
 
             this.stream.on('end', function() {
-                console.log("ended", parent.playing);
+                // Only play if this song is playing
                 if(parent.playing) {
                     console.log('calling next');
                     parent.next();
@@ -49,16 +53,15 @@ module.exports = {
         }
     },
     next: function() {
-        console.log('calling stop');
         this.stop();
-        this._ind += 1;
-        console.log('calling play');
-        this.play();
-        this.onSongChange();
+        var parent = this;
+            parent._ind += 1;
+            parent.play();
+            parent.onSongChange();
     },
     prev: function() {
-        this._ind -= 1;
         this.stop();
+        this._ind -= 1;
         this.play();
         this.onSongChange();
     },

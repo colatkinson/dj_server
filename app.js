@@ -106,6 +106,21 @@ io.on('connection', function (socket) {
     console.log(data);
     player.play_track(parseInt(data));
   });
+
+  socket.on('toggle song', function(data) {
+    if(!player.playing) {
+      player.play();
+    } else {
+      player.stop();
+    }
+  });
+
+  socket.on('next song', function(data) {
+    player.next();
+  });
+  socket.on('prev song', function(data) {
+    player.prev();
+  });
 });
 
 

@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  form(method="POST", action="/add")#urlForm
+    input(type="url", name="url", required)#urlInput
+    input(type="submit")#urlSubmit
+
+  ul#playlist

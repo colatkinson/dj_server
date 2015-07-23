@@ -1,0 +1,45 @@
+body {
+  //padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#playlist {
+    display: flex;
+    /*height: 5000px;*/
+    flex-flow: row wrap;
+  
+    /* Then we define how is distributed the remaining space */
+    justify-content: center;
+    list-style: none;
+    padding: 0px;
+}
+#playlist li {
+    display: inline-block;
+    width: 25%;
+    height: 150px;
+    background-size: cover;
+    margin: 1em 0 0 1em;
+    color: white;
+    padding: 1em 0 0 1em;
+}
+
+#playlist li img {
+    width: 50%;
+    display: block;
+}
+
+@media all and (max-width: 800px) {
+  #playlist li {
+    width: 100%;
+    padding: 0em;
+    margin: 0em;
+  }
+
+  #playlist {
+    flex-flow: column wrap;
+  }
+}

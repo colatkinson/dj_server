@@ -85,9 +85,11 @@ io.on('connection', function (socket) {
   };
   socket.on('add song', function (data) {
     sc.resolveUrl(data, function(json) {
-      if(json.track_type) {
+      console.log(json.kind);
+      if(json.kind == 'track') {
+        console.log(json, 'adding track')
         addTrack(json);
-      } else if(json.playlist_type) {
+      } else if(json.kind == 'playlist') {
         for(var i = 0; i < json.tracks.length; i++) {
           /*var cur = json.tracks[i];
           cur.artwork_url.replace(/-large\./g, '-t500x500.');

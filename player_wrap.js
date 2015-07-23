@@ -7,10 +7,11 @@ var secrets = require('./secrets');
 module.exports = {
     _ind: 0,
     playlist: [],
-    Track: function(url, title, artist) {
+    Track: function(url, title, artist, artwork) {
         this.url = url;
         this.title = title;
         this.artist = artist;
+        this.artwork = artwork;
     },
     playing: false,
     stream: null,

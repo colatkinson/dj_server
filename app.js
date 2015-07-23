@@ -65,6 +65,14 @@ app.use(function(err, req, res, next) {
   });
 });
 
+function addTrack(json) {
+  var art = 'https://placehold.it/300x300';
+  if(json.artwork_url) {
+    art = json.artwork_url.replace(/large/g, 'crop');
+  }
+  player.add(new player.Track(json.stream_url, json.title, json.user.username, art));
+}
+
 io.on('connection', function (socket) {
   // console.log(socket);
   /*socket.emit('news', { hello: 'world' });
@@ -77,7 +85,16 @@ io.on('connection', function (socket) {
   };
   socket.on('add song', function (data) {
     sc.resolveUrl(data, function(json) {
-      player.add(new player.Track(json.stream_url, json.title, json.user.username));
+      if(json.track_type) {
+        addTrack(json);
+      } else if(json.playlist_type) {
+        for(var i = 0; i < json.tracks.length; i++) {
+          /*var cur = json.tracks[i];
+          cur.artwork_url.replace(/-large\./g, '-t500x500.');
+          player.add(new player.Track(cur.stream_url, cur.title, cur.user.username, cur.artwork_url));*/
+          addTrack(json.tracks[i]);
+        }
+      }
       player.play();
       io.emit('song added', {ind: player._ind, playlist: player.playlist});
     });
